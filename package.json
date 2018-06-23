@@ -1,0 +1,15 @@
+{
+  "name": "Potoroo-2.0",
+  "version": "1.0.0",
+  "description": "This is webmap application inspired by the bootleaf webmap  (https://github.com/bmcbride/bootleaf.git), focussed around showing different webmaps on the same instance.",
+  "main": "server.js",
+  "repository": "https://github.com/kd112/Potoroo-2.0.git",
+  "author": "Rahul Dasgupta",
+  "license": "MIT",
+  "dependencies": {
+    "body-parser": "^1.18.3",
+    "express": "^4.16.3",
+    "log": "^1.4.0",
+    "pug": "^2.0.3"
+  }
+}
