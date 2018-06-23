@@ -1,21 +1,21 @@
-const router = require('express').Router()
+const express = require('express');
+// const router = express.Router();
 
-// class Router{
-//     constructor(app){
-//         this.app = app;
-//         return this;
-//     }
-        
-// }
+// /* GET home page. */
+// router.get('/', function(req, res, next) {
+//   res.send({ title: 'Express' });
+// });
 
-function Router(app){
-    
-    app.get('/',(req,res,err)=>{
-        res.send('Index Page')
+// module.exports = router;
+module.exports = function(app){
+    app.get('/',function(req,res,next){
+        // console.log(res)
+        vApp.logger.routerlog(res.statusCode,`${req.method} ${req.url}`)
+        res.send({title:"Express"})
+    })
+
+    app.get('*',(req,res,next)=>{
+        vApp.logger.routerlog(404,`${req.method} ${req.url}`)
+        res.send({Message:"Invalid Request"})
     })
 }
-
-
-
-
-module.exports=Router;
