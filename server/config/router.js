@@ -8,14 +8,22 @@ const express = require('express');
 
 // module.exports = router;
 module.exports = function(app){
-    app.get('/',function(req,res,next){
-        // console.log(res)
-        vApp.logger.routerlog(res.statusCode,`${req.method} ${req.url}`)
-        res.send({title:"Express"})
-    })
+    
 
-    app.get('*',(req,res,next)=>{
-        vApp.logger.routerlog(404,`${req.method} ${req.url}`)
-        res.send({Message:"Invalid Request"})
-    })
+    function routeLogger(req,res,error){
+        vApp.logger.routerlog(`${res.statusCode}`,`${req.method} ${req.url}`)
+        return res.send(res.result)
+    }
+    //CRUD Routes for maps
+    app.get('/api/maps',app.controllers.MapController.getMaps,routeLogger)
+    app.get('/api/maps/:id',app.controllers.MapController.getMapsById,routeLogger)
+    app.post('/api/maps',app.controllers.MapController.createNewMap,routeLogger)
+    app.put('/api/maps/:id',app.controllers.MapController.updateMap,routeLogger)
+    app.delete('/api/maps/:id',app.controllers.MapController.deleteMap,routeLogger)
+    // Crud Routes for users
+    app.get('/api/users',app.controllers.UserController.getUsers,routeLogger)
+    app.get('/api/users/:id',app.controllers.UserController.getUsersById,routeLogger)
+    app.post('/api/users',app.controllers.UserController.createNewUser,routeLogger)
+    app.put('/api/users/:id',app.controllers.UserController.updateUser,routeLogger)
+    app.delete('/api/users/:id',app.controllers.UserController.deleteUser,routeLogger)
 }

@@ -3,6 +3,7 @@ global.vApp ={
     appname : name,
     port : process.env.PORT || 5000,
     mode : process.env.NODE_ENV || 'development',
+    root : __dirname,
 // console.log(new(require('./config/logger'))()
     logger : new(require('./server/config/logger'))({app_title:name})
 } 
