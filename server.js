@@ -6,12 +6,23 @@ global.vApp ={
     root : __dirname,
 // console.log(new(require('./config/logger'))()
     logger : new(require('./server/config/logger'))({app_title:name})
-} 
+}
+
 var express = require('./server/express');
 vApp.express = express
-vApp.express.listen(vApp.port,()=>{
-    
-    vApp.logger.info(`Running on port ${vApp.port} in ${vApp.mode} mode`)
+global.dbConnectEvent = new (require('./server/config/events'))()
+
+dbConnectEvent.on('connect',()=>{
+
+    vApp.express.listen(vApp.port,()=>{
+        
+        vApp.logger.info(`Running on port ${vApp.port} in ${vApp.mode} mode`)
+    })
+})
+dbConnectEvent.on('disconnect',(error)=>{
+    // console.log(error)
+    vApp.logger.error(`${error.name}:${error.message}\n .....Exiting`)
+    process.exit(1)
 })
 
 

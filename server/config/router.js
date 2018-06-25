@@ -15,15 +15,15 @@ module.exports = function(app){
         return res.send(res.result)
     }
     //CRUD Routes for maps
-    app.get('/api/maps',app.controllers.MapController.getMaps,routeLogger)
-    app.get('/api/maps/:id',app.controllers.MapController.getMapsById,routeLogger)
-    app.post('/api/maps',app.controllers.MapController.createNewMap,routeLogger)
-    app.put('/api/maps/:id',app.controllers.MapController.updateMap,routeLogger)
-    app.delete('/api/maps/:id',app.controllers.MapController.deleteMap,routeLogger)
+    app.get('/api/maps',controllers.MapController.getMaps,routeLogger)
+    app.get('/api/maps/:id',controllers.MapController.getMapsById,routeLogger)
+    app.post('/api/maps',controllers.MapController.createNewMap,routeLogger)
+    app.put('/api/maps/:id',controllers.MapController.updateMap,routeLogger)
+    app.delete('/api/maps/:id',controllers.MapController.deleteMap,routeLogger)
     // Crud Routes for users
-    app.get('/api/users',app.controllers.UserController.getUsers,routeLogger)
-    app.get('/api/users/:id',app.controllers.UserController.getUsersById,routeLogger)
-    app.post('/api/users',app.controllers.UserController.createNewUser,routeLogger)
-    app.put('/api/users/:id',app.controllers.UserController.updateUser,routeLogger)
-    app.delete('/api/users/:id',app.controllers.UserController.deleteUser,routeLogger)
+    app.get('/api/users',controllers.UserController.getUsers,routeLogger)
+    app.get('/api/users/:id',controllers.UserController.getUsersById,routeLogger)
+    app.post('/api/users',controllers.UserController.createNewUser,routeLogger)
+    app.put('/api/users/:id',controllers.UserController.updateUser,routeLogger)
+    app.delete('/api/users/:id',controllers.UserController.deleteUser,routeLogger)
 }

@@ -9,11 +9,17 @@ const configs = require(`../environments/configs/${vApp.mode}.json`)
 // }
 
 mongoose.Promise = global.Promise;
-// module.exports= 
+// module.exports=
+vApp.logger.debug(`Connecting to Mongodb ${configs.database.name}`)
 mongoose.connect(`mongodb://${configs.database.authentication.user}:${configs.database.authentication.password}@${configs.database.url}`,
 (err)=>{
     if (err){
-        vApp.logger.error(`Couldnot connect to Database ${configs.database.name}, Database Configs Invalid`)
-        process.exit()
-    }else vApp.logger.debug(`Connected to Database ${configs.database.name}`)
+        // vApp.logger.error(err)
+        dbConnectEvent.emit('disconnect',err);
+        
+    }else {
+        vApp.logger.debug(`Connected to Database ${configs.database.name}`)
+        dbConnectEvent.emit('connect')
+
+    }
 })

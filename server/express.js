@@ -9,26 +9,25 @@ app.use(bodyparser.urlencoded({extended:false}));
 app.use(bodyparser.json())
 app.use(express.static(require('path').join(vApp.root,'assets')));
 require('./config/database')
-app.config={
-
-}
+const potoroo = require('./config/potoroo')
 vApp.logger.debug("Setting up Models")
 app.models = {
     MapModel : require('./api/models/MapModel'),
     UserModel : require('./api/models/UserModel')
 }
 vApp.logger.debug('Setting up Services');
-app.services = {
-MapServices: new (require('./api/services/MapServices'))(app.models.MapModel),
-UserServices: new (require('./api/services/UserServices'))(app.models.UserModel)
-};
+// app.services = {
+global.MapServices = new (require('./api/services/MapServices'))(app.models.MapModel),
+global.UserServices = new (require('./api/services/UserServices'))(app.models.UserModel)
+// };
 vApp.logger.debug('Setting up controllers');
-app.controllers = {
+global.controllers = {
     MapController:new (require('./api/controllers/MapController'))(app),
     UserController:new (require('./api/controllers/UserController'))(app)
 };
 vApp.logger.debug('Wiring up the routes');
 require('./config/router')(app);
+
 
 
 
