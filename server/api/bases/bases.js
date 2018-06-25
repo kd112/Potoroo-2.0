@@ -22,10 +22,10 @@ class Bases {
                     reject(error)
                 }
                 if((!result && options && options.handleNotFound)|| (!result && options)){
-                    vApp.logger.debug("Result not Found")
+                    logger.debug("Result not Found")
                     reject()
                 }
-                // vApp.logger.debug(result)
+                // logger.debug(result)
                 resolve(result)
             })
         })
@@ -46,7 +46,7 @@ class Bases {
             let newRecord = new self.model(info)
             newRecord.save((error,createdRecord)=>{
                 if(error){
-                    vApp.logger.error(err)
+                    logger.error(err)
                     reject(error)
                 }
                 resolve(createdRecord.toJSON())

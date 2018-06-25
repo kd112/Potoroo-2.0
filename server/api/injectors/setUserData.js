@@ -1,7 +1,7 @@
 'use strict';
 
 module.exports = function (req, res, next) {
-    // vApp.logger.debug(req.method, ' ', req.path);
+    // logger.debug(req.method, ' ', req.path);
     co(function* () {
         if (req.headers.authorization && req.headers.authorization.split(' ')[0] === 'Bearer') {
             var token = req.headers.authorization.split(' ')[1];
@@ -17,7 +17,7 @@ module.exports = function (req, res, next) {
         }
         return next();
     }).catch(function (error) {
-        vApp.log.error(error);
+        logger.error(error);
         res.status(403).json({ error: 'Forbidden' });
     });
 };

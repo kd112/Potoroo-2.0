@@ -1,5 +1,5 @@
 const mongoose = require('mongoose');
-vApp.logger.debug('Setting up User Model')
+logger.debug('Setting up User Model')
 let UserSchema = new mongoose.Schema({
     name: {
         first: { type: String, default: '' },
@@ -36,7 +36,7 @@ let UserSchema = new mongoose.Schema({
 
 //             return next();
 //         }).catch(function (err) {
-//             vApp.log.error(err);
+//             log.error(err);
 //             return next(err);
 //         });
 //     } else {

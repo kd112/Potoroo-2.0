@@ -1,6 +1,6 @@
 'use strict';
 module.exports = function (req, res, next) {
-    // vApp.logger.debug(req.method, ' ', req.path);
+    // logger.debug(req.method, ' ', req.path);
     co(function* () {
         if (req.cookies['encl-ui'] && req.cookies['encl-ui'].code) {
             var token = req.cookies['encl-ui'].code;
@@ -16,7 +16,7 @@ module.exports = function (req, res, next) {
         }
         return next();
     }).catch(function (error) {
-        vApp.log.error(error);
+        logger.error(error);
         res.clearCookie('encl-ui');
         return next();
     });

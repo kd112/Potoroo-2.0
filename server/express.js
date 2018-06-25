@@ -16,17 +16,17 @@ require('./config/database')
 const potoroo = require('./config/potoroo')
 // Configure the session token used to allow users to login
 const sessiontoken = require('./config/session');
-
+app.appconfig = require('./config/application');
 // Set up the mongo models
-vApp.logger.debug("Setting up Models")
+logger.debug("Setting up Models")
 app.models = {
     MapModel : require('./api/models/MapModel'),
     UserModel : require('./api/models/UserModel')
 }
 // The base class that all services to query the database will inherit
-vApp.logger.debug('Setting up Bases')
+logger.debug('Setting up Bases')
 global.base = (require('./api/bases/bases'))
-vApp.logger.debug('Setting up Services');
+logger.debug('Setting up Services');
 
 // Settting up the services, these form the classes that will actually interact with the database
 // These are global variables to make it easy to call them from any controller class
@@ -35,7 +35,7 @@ global.UserServices = new (require('./api/services/UserServices'))(app.models.Us
 global.JWTServices = new(require('./api/services/JWTService'))(sessiontoken.session);
 
 // Setting up injectors
-vApp.logger.debug('Setting up Injectors Services');
+logger.debug('Setting up Injectors Services');
 global.injectors={
     setUserFromCookie: require('./api/injectors/setUserFromCookie'),
     setUserFromCookie: require('./api/injectors/setUserData')
@@ -43,7 +43,7 @@ global.injectors={
 
 //  The controller object, any route set up in the router will call one of these controllers
 // These controllers are again global so that they can be called from any route file
-vApp.logger.debug('Setting up controllers');
+logger.debug('Setting up controllers');
 global.controllers = {
     MapController:new (require('./api/controllers/MapController'))(),
     UserController:new (require('./api/controllers/UserController'))(),
@@ -51,7 +51,7 @@ global.controllers = {
     ViewController: new(require('./api/controllers/ViewController'))()
 };
 // The route file for this application
-vApp.logger.debug('Wiring up the routes');
+logger.debug('Wiring up the routes');
 require('./config/router')(app);
 
 

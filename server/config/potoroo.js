@@ -15,14 +15,14 @@ emitter.on('appStarted', () => {
                 },
                 isAdmin:true
             };
-            vApp.logger.debug(admin)
+            logger.debug(admin)
             yield UserServices.createUser(admin)
         }
         return ;
     }).then(()=>{
-        vApp.logger.debug('Admin User established');
+        logger.debug('Admin User established');
     }).catch((error)=>{
-        vApp.logger.error(error)
+        logger.error(error)
     })
 
 })

@@ -7,7 +7,7 @@ class ViewController{
     }
 
     renderLogin(req,res,next){
-        res.render('public/baseTemplate')
+        res.render('public/baseTemplate',{title:appname})
         next();
     }
 }

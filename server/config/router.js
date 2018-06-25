@@ -11,7 +11,7 @@ module.exports = function(app){
     
 
     function routeLogger(req,res,error){
-        vApp.logger.routerlog(`${res.statusCode}`,`${req.method} ${req.url}`)
+        logger.routerlog(`${res.statusCode}`,`${req.method} ${req.url}`)
         return res.send(res.result)
     }
     //CRUD Routes for maps

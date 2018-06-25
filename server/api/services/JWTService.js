@@ -17,7 +17,7 @@ class JWTService {
         return new Promise(function (resolve, reject) {
             jwt.verify(token, this.key, {}, function (err, user) {
                 if (err) {
-                    vApp.logger.error(err);
+                    logger.error(err);
                     reject(err);
                 } else {
                     resolve(user);

@@ -1,6 +1,6 @@
 const mongoose = require('mongoose');
 // const Schema = mongoose.Schema;
-vApp.logger.debug('Setting up Map Model')
+logger.debug('Setting up Map Model')
 const MapSchema  =new mongoose.Schema({
     // _id:mongoose.Types.ObjectId,
     name : String
