@@ -1,5 +1,6 @@
-class MapServices{
+class MapServices extends base{
     constructor(model){
+        super(model)
         this.model = model
     }
 }

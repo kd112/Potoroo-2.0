@@ -15,11 +15,11 @@ mongoose.connect(`mongodb://${configs.database.authentication.user}:${configs.da
 (err)=>{
     if (err){
         // vApp.logger.error(err)
-        dbConnectEvent.emit('disconnect',err);
+        emitter.emit('disconnect',err);
         
     }else {
         vApp.logger.debug(`Connected to Database ${configs.database.name}`)
-        dbConnectEvent.emit('connect')
+        emitter.emit('connect')
 
     }
 })

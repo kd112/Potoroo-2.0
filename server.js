@@ -8,18 +8,23 @@ global.vApp ={
     logger : new(require('./server/config/logger'))({app_title:name})
 }
 
+global.emitter = new (require('./server/config/events'))()
 var express = require('./server/express');
 vApp.express = express
-global.dbConnectEvent = new (require('./server/config/events'))()
-
-dbConnectEvent.on('connect',()=>{
+global.co = require('co');
+emitter.on('connect',()=>{
 
     vApp.express.listen(vApp.port,()=>{
-        
-        vApp.logger.info(`Running on port ${vApp.port} in ${vApp.mode} mode`)
+        try {
+            vApp.logger.info(`Running on port ${vApp.port} in ${vApp.mode} mode`)
+            emitter.emit('appStarted')
+        } catch(error){
+            vApp.logger.error(error)
+            process.exit(1)
+        }
     })
 })
-dbConnectEvent.on('disconnect',(error)=>{
+emitter.on('disconnect',(error)=>{
     // console.log(error)
     vApp.logger.error(`${error.name}:${error.message}\n .....Exiting`)
     process.exit(1)

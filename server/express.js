@@ -15,6 +15,8 @@ app.models = {
     MapModel : require('./api/models/MapModel'),
     UserModel : require('./api/models/UserModel')
 }
+vApp.logger.debug('Setting up Bases')
+global.base = (require('./api/bases/bases'))
 vApp.logger.debug('Setting up Services');
 // app.services = {
 global.MapServices = new (require('./api/services/MapServices'))(app.models.MapModel),
@@ -27,6 +29,8 @@ global.controllers = {
 };
 vApp.logger.debug('Wiring up the routes');
 require('./config/router')(app);
+
+
 
 
 
