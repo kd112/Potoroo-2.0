@@ -1,5 +1,5 @@
 const mongoose = require('mongoose');
-
+vApp.logger.debug('Setting up User Model')
 let UserSchema = new mongoose.Schema({
     name: {
         first: { type: String, default: '' },

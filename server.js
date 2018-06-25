@@ -17,6 +17,8 @@ emitter.on('connect',()=>{
     vApp.express.listen(vApp.port,()=>{
         try {
             vApp.logger.info(`Running on port ${vApp.port} in ${vApp.mode} mode`)
+            // The appStarted emitter will run all functions and scripts that 
+            // waiting for this event
             emitter.emit('appStarted')
         } catch(error){
             vApp.logger.error(error)

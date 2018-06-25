@@ -14,11 +14,14 @@ vApp.logger.debug(`Connecting to Mongodb ${configs.database.name}`)
 mongoose.connect(`mongodb://${configs.database.authentication.user}:${configs.database.authentication.password}@${configs.database.url}`,
 (err)=>{
     if (err){
-        // vApp.logger.error(err)
+        
+        // Emit this signal along with the error, so that the application 
+        // Will exit cleanly,
         emitter.emit('disconnect',err);
         
     }else {
         vApp.logger.debug(`Connected to Database ${configs.database.name}`)
+        // The signal when emits tells the application to start the server
         emitter.emit('connect')
 
     }
