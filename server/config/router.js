@@ -26,4 +26,9 @@ module.exports = function(app){
     app.post('/api/users',controllers.UserController.createNewUser,routeLogger)
     app.put('/api/users/:id',controllers.UserController.updateUser,routeLogger)
     app.delete('/api/users/:id',controllers.UserController.deleteUser,routeLogger)
+
+    // Routes for the application
+    app.get('/', injectors.setUserFromCookie,controllers.ViewController.renderLogin,routeLogger)
+    app.get('/login', injectors.setUserFromCookie,controllers.ViewController.renderLogin, routeLogger)
+    app.post('/authenticate', controllers.ApplicationController.authenticate, routeLogger)
 }

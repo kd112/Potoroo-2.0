@@ -1,6 +1,6 @@
 class UserController{
-    constructor(app){
-        this.app = app;
+    constructor(){
+
         return this
     }
     getUsers(req,res,next){

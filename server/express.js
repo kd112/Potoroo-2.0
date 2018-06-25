@@ -7,7 +7,8 @@ const bodyparser = require('body-parser');
 app.use(bodyparser.urlencoded({extended:false}));
 app.use(bodyparser.json())
 app.use(express.static(require('path').join(vApp.root,'assets')));
-
+// Using PUG as the template
+app.set('view engine','pug')
 // Connect to the mongodb database
 require('./config/database')
 // Instantiate the function that will create the admin user on first start up
@@ -32,12 +33,21 @@ global.MapServices = new (require('./api/services/MapServices'))(app.models.MapM
 global.UserServices = new (require('./api/services/UserServices'))(app.models.UserModel)
 global.JWTServices = new(require('./api/services/JWTService'))(sessiontoken.session);
 
+// Setting up injectors
+vApp.logger.debug('Setting up Injectors Services');
+global.injectors={
+    setUserFromCookie: require('./api/injectors/setUserFromCookie'),
+    setUserFromCookie: require('./api/injectors/setUserData')
+}
+
 //  The controller object, any route set up in the router will call one of these controllers
 // These controllers are again global so that they can be called from any route file
 vApp.logger.debug('Setting up controllers');
 global.controllers = {
-    MapController:new (require('./api/controllers/MapController'))(app),
-    UserController:new (require('./api/controllers/UserController'))(app)
+    MapController:new (require('./api/controllers/MapController'))(),
+    UserController:new (require('./api/controllers/UserController'))(),
+    ApplicationController : new(require('./api/controllers/ApplicationController'))(),
+    ViewController: new(require('./api/controllers/ViewController'))()
 };
 // The route file for this application
 vApp.logger.debug('Wiring up the routes');

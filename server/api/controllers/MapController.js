@@ -1,5 +1,5 @@
 class MapController{
-    constructor(app){
+    constructor(){
         // console.log(app.models)
         return this
     }
