@@ -1,5 +1,20 @@
-.login
-    .user-input-container
-        input.username(type="text" placeholder="username")
-    .password-input-container
-        input.username(type="password" placeholder="password")
+//- .login
+
+.header-overlay
+.header-login
+    form.form-signin(action="")
+        .username-div
+            input.form-control#inputUsername(type="text" placeholder="User Name" required autofocus)
+        .password-div
+            input.form-control#inputPassword(type="password" placeholder="Password" required )
+        .submit-btn
+            button.btn#submit-btn(type="submit")
+                |Sign in
+        .forgot-btn
+            a.btn#forgot-btn(href="#")
+             |Forgot Login Details
+        
+    //- .user-input-container
+    //-     input.username(type="text" placeholder="username")
+    //- .password-input-container
+    //-     input.username(type="password" placeholder="password")

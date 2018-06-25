@@ -6,7 +6,8 @@ const app =express();
 const bodyparser = require('body-parser');
 app.use(bodyparser.urlencoded({extended:false}));
 app.use(bodyparser.json())
-app.use(express.static(require('path').join(vApp.root,'assets')));
+
+app.use(express.static('public'))
 // Using PUG as the template
 app.set('view engine','pug')
 // Connect to the mongodb database

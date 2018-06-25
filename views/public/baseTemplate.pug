@@ -4,8 +4,22 @@ html(lang="en")
         meta(charset="UTF-8")
         meta(name="viewport", content="width=device-width, initial-scale=1.0")
         meta(http-equiv="X-UA-Compatible", content="ie=edge")
-        title Document
+        //- link(rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.0/css/bootstrap.min.css" integrity="sha384-9gVQ4dYFwwWSjIDZnLEWnxCjeSWFphJiwGPXr1jddIhOegiu1FwO5qRGvFXOdJZ4" crossorigin="anonymous")
+        //- link(rel="stylesheet" href="https://getbootstrap.com/dist/css/bootstrap.min.css" crossorigin="anonymous")
+        link(href="/css/signin.css" rel="stylesheet")
+
+        title Potoroo
     body
-        #container
-            #loginContainer
-                include login
+        //- #container
+            //- #loginContainer
+            img.mb4(src="https://getbootstrap.com/assets/brand/bootstrap-solid.svg", alt="" width="72" height="72")
+        header.i-header.container
+            .app-title
+                h1
+                    |Potoroo
+            .fullscreen-login-page
+                img.image-bg(src="/misc/background.jpg", alt="" width="100%" heigth='100%')
+            include login
+        footer.i-footer
+            p.mt-5.mb-3.text-muted
+                |&copy; 2017-2018
