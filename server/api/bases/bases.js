@@ -30,7 +30,36 @@ class Bases {
             })
         })
     }
-    getByQuery(filter, options, projection){}
+    getByQuery(filter, options, projection){
+        let self = this;
+        return new Promise((resolve, reject) => {
+            if (!filter) {
+                filter = {};
+                logger.warn(`No filter provided for find ${self.model.modelName}`)
+                // let error = new Error('filter is required')
+                // error.errorType = 'INTERNAL_VALIDATION';
+                // error.message = 'filter is required'
+                // reject(error)
+            }
+
+            let transaction = self.model.find(filter);
+            // resolve({})
+            transaction.exec((error, result) => {
+                if (error) {
+                    let msg = error.toString();
+                    let error = new Error(msg)
+                    error.errorType = 'TRANSCATION'
+                    reject(error)
+                }
+                if ((!result && options && options.handleNotFound) || (!result && options)) {
+                    logger.debug("Result not Found")
+                    reject()
+                }
+                // logger.debug(result)
+                resolve(result)
+            })
+        })
+    }
     countByQuery(filter, options){}
     create(info, options){
         let self = this;

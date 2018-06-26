@@ -19,7 +19,16 @@ class UserServices extends base{
             }
         });
     }
-
+    getByQuery(filter, option) {
+        let getOneByQuery = super.getByQuery(filter, option)
+        return new Promise((resolve, reject) => {
+            getOneByQuery.then((result) => {
+                return resolve(result)
+            }).catch((error) => {
+                reject(error)
+            })
+        })
+    }
     getOneByQuery(filter,option){
         let getOneByQuery = super.getOneByQuery(filter,option)
         return new Promise((resolve,reject)=>{
