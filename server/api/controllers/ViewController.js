@@ -1,5 +1,6 @@
 'use strict';
-
+const pug = require('pug');
+const path = require('path')
 
 class ViewController{
     constructor(){
@@ -7,7 +8,9 @@ class ViewController{
     }
 
     renderLogin(req,res,next){
-        res.render('public/baseTemplate',{title:appname})
+        res.status(200);
+        let login = pug.renderFile(path.join(Approot,'views/public/baseTemplate.pug'), { title: appname })
+        res.result  = login
         next();
     }
 }
