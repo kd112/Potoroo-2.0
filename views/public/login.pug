@@ -2,7 +2,7 @@
 
 .header-overlay
 .header-login
-    form.form-signin(action="")
+    form.form-signin#login-form(action="")
         .username-div
             input.form-control#inputUsername(type="text" placeholder="User Name" required autofocus)
         .password-div
@@ -11,7 +11,7 @@
             button.btn#submit-btn(type="submit")
                 |Sign in
         .forgot-btn
-            a.btn#forgot-btn(href="#")
+            a.btn#forgot-btn(href='#')
              |Forgot Login Details
         
     //- .user-input-container

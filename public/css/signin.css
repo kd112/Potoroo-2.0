@@ -95,7 +95,7 @@ input,button{
   background:#e5e5e5;
   padding-left:30px;
   font-size: 16pt;
-  
+  border-radius: 10px;
 }
 
 #forgot-btn{

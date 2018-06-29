@@ -20,7 +20,7 @@ class Logger {
         
         if ([200,201,202,203,204,205,206,226].includes(parseInt(code)))return chalk.bgGreen(code)
         if ([400,401,402,403,404,405,406,407,408,409,410,411,412,413,414,415,416,417,418].includes(parseInt(code)))return chalk.bgRed(code)
-        else return chalk.bgWhite(code)
+        else return chalk.bgWhite(chalk.black(code))
     }
     getLogFromArgs(args){
         let log = '';

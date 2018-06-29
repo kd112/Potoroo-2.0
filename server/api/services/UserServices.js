@@ -19,6 +19,17 @@ class UserServices extends base{
             }
         });
     }
+    validatePassword(password_hash,user_password){
+        return new Promise((resolve,reject)=>{
+            bcrypt.compare(user_password,password_hash,(error,res)=>{
+                if (error || !res){
+                    resolve(false)
+                }else{
+                    resolve(true)
+                }
+            })
+        })
+    }
     getByQuery(filter, option) {
         let getOneByQuery = super.getByQuery(filter, option)
         return new Promise((resolve, reject) => {
@@ -58,6 +69,41 @@ class UserServices extends base{
                 return resolve(result);
             }).catch((error)=>{
                 reject(error)
+            })
+        })
+    }
+    authenticate(username, password) {
+        let self = this;
+        return new Promise((resolve, reject) => {
+
+            co(function* () {
+                let users = yield self.getByQuery({
+                    'login.username': username,
+                })
+                if (users.length != 1) {
+                    let message = `Multiple users with username:${username}`
+                    let error = new Error(message)
+                    error.msg = "Auth Failed"
+                    yield Promise.reject(error)
+                }
+                let user = users[0];
+                let passwordMatch = false;
+
+                if(user){
+                    passwordMatch = yield self.validatePassword(user.login.secret,password)
+                }
+                if (!user || !passwordMatch){
+                    let message = `Invalid Credentials username:${username}`
+                    let error = new Error(message)
+                    error.msg = "Auth Failed"
+                    yield Promise.reject(error)
+                }
+                return user
+
+            }).then((result) => { 
+                return resolve(result)
+            }).catch((error) => { 
+                return reject(error)
             })
         })
     }
