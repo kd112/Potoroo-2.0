@@ -72,40 +72,61 @@ class UserServices extends base{
             })
         })
     }
-    authenticate(username, password) {
+    async authenticate(username, password) {
         let self = this;
-        return new Promise((resolve, reject) => {
-
-            co(function* () {
-                let users = yield self.getByQuery({
-                    'login.username': username,
-                })
-                if (users.length != 1) {
-                    let message = `Multiple users with username:${username}`
-                    let error = new Error(message)
-                    error.msg = "Auth Failed"
-                    yield Promise.reject(error)
-                }
-                let user = users[0];
-                let passwordMatch = false;
-
-                if(user){
-                    passwordMatch = yield self.validatePassword(user.login.secret,password)
-                }
-                if (!user || !passwordMatch){
-                    let message = `Invalid Credentials username:${username}`
-                    let error = new Error(message)
-                    error.msg = "Auth Failed"
-                    yield Promise.reject(error)
-                }
-                return user
-
-            }).then((result) => { 
-                return resolve(result)
-            }).catch((error) => { 
-                return reject(error)
-            })
+        let users = await self.getByQuery({
+            'login.username':username,
         })
+        if (users.length!=1){
+            let message = `Multiple users with username:${username}`
+            let error = new Error(message)
+            error.msg = "Auth Failed"
+            throw error
+        }
+        let user = users[0];
+        let passwordMatch = false;
+        if (user){
+            passwordMatch = await self.validatePassword(user.login.secret,password)
+        }
+        if(!user || !passwordMatch){
+            let message = `Invalid Credentials username:${username}`
+            let error = new Error(message)
+            error.msg = "Auth Failed"
+            throw error
+        }
+        return user;
+        // return new Promise((resolve, reject) => {
+
+        //     co(function* () {
+        //         let users = yield self.getByQuery({
+        //             'login.username': username,
+        //         })
+        //         if (users.length != 1) {
+        //             let message = `Multiple users with username:${username}`
+        //             let error = new Error(message)
+        //             error.msg = "Auth Failed"
+        //             yield Promise.reject(error)
+        //         }
+        //         let user = users[0];
+        //         let passwordMatch = false;
+
+        //         if(user){
+        //             passwordMatch = yield self.validatePassword(user.login.secret,password)
+        //         }
+        //         if (!user || !passwordMatch){
+        //             let message = `Invalid Credentials username:${username}`
+        //             let error = new Error(message)
+        //             error.msg = "Auth Failed"
+        //             yield Promise.reject(error)
+        //         }
+        //         return user
+
+        //     }).then((result) => { 
+        //         return resolve(result)
+        //     }).catch((error) => { 
+        //         return reject(error)
+        //     })
+        // })
     }
 }
 

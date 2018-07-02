@@ -7,6 +7,7 @@ const bodyparser = require('body-parser');
 app.use(bodyparser.urlencoded({extended:false}));
 app.use(bodyparser.json())
 
+
 app.use(express.static('public'))
 // Using PUG as the template
 app.set('view engine','pug')
@@ -50,6 +51,10 @@ global.controllers = {
     ApplicationController : new(require('./api/controllers/ApplicationController'))(),
     ViewController: new(require('./api/controllers/ViewController'))()
 };
+// Enable Cors
+logger.debug('Enabling Cors')
+require('./config/cors').init(app)
+
 // The route file for this application
 logger.debug('Wiring up the routes');
 require('./config/router')(app);

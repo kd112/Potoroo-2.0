@@ -6,11 +6,15 @@
   "repository": "https://github.com/kd112/Potoroo-2.0.git",
   "author": "Rahul Dasgupta",
   "license": "MIT",
+  "scripts": {
+    "server": "nodemon server.js"
+  },
   "dependencies": {
     "bcrypt-nodejs": "^0.0.3",
     "body-parser": "^1.18.3",
     "co": "^4.6.0",
     "colors": "^1.3.0",
+    "cors": "^2.8.4",
     "express": "^4.16.3",
     "global": "^4.3.2",
     "jsonwebtoken": "^8.3.0",
