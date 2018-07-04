@@ -22,6 +22,29 @@ class Logger {
         if ([400,401,402,403,404,405,406,407,408,409,410,411,412,413,414,415,416,417,418].includes(parseInt(code)))return chalk.bgRed(` ${code} `)
         else return chalk.bgWhite(chalk.black(` ${code} `))
     }
+    getMethodColor(log){
+        let new_log = log.split(' ')
+        let result = new_log[1]+" "
+        let method
+        if (new_log[0]==='GET'){
+            method = chalk.bgGreen(` ${new_log[0]} `)
+            result+=method
+        }
+        if (new_log[0]==='PUT'){
+            method = chalk.bgYellow(` ${new_log[0]} `)
+            result += method
+        }
+        if (new_log[0]==='POST'){
+            method = chalk.bgCyan(` ${new_log[0]} `)
+            result += method
+        }
+        if (new_log[0] ==='DELETE'){
+            method = chalk.bgRed(` ${new_log[0]} `)
+            result += method
+        }
+
+        return result
+    }
     getLogFromArgs(args){
         let log = '';
         let code = '';
@@ -40,7 +63,7 @@ class Logger {
                     log += args[i].stack;
                 }else{
                     if (i===0) code = this.getcodeColor(args[i])
-                    else log += args[i]
+                    else log += this.getMethodColor(args[i]) 
                 }
             }
         }

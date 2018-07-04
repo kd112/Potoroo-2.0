@@ -8,16 +8,14 @@ class UserServices extends base{
     }
     // free string password input
     // output hashed password
-    bCryptHash(password){
-        return new Promise((resolve, reject) => {
-            try {
-                let hash = bcrypt.hashSync(password);
-                resolve(hash);
+    async bCryptHash(password){
+        try {
+            let hash = bcrypt.hashSync(password);
+            return hash;
 
-            } catch (err) {
-                reject(err);
-            }
-        });
+        } catch (err) {
+            throw err;
+        }
     }
     validatePassword(password_hash,user_password){
         return new Promise((resolve,reject)=>{
@@ -40,15 +38,20 @@ class UserServices extends base{
             })
         })
     }
-    getOneByQuery(filter,option){
-        let getOneByQuery = super.getOneByQuery(filter,option)
-        return new Promise((resolve,reject)=>{
-            getOneByQuery.then((result)=>{
-                return resolve(result)
-            }).catch((error)=>{
-                reject(error)
-            })
-        })
+    async getOneByQuery(filter,option){
+        try{
+            let result = await super.getOneByQuery(filter,option)
+            return result 
+        }catch(error){
+            throw error
+        }
+        // return new Promise((resolve,reject)=>{
+        //     getOneByQuery.then((result)=>{
+        //         return resolve(result)
+        //     }).catch((error)=>{
+        //         reject(error)
+        //     })
+        // })
     }
     createUser(userInfo,options){
         // let self = this;

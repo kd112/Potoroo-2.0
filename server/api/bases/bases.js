@@ -15,7 +15,7 @@ class Bases {
             let result = await self.model.findOne(filter).lean();
             return result
         }catch(error){
-            throw errror
+            throw error
         }
         // transaction.exec((error,result)=>{
         //     if(error){
@@ -77,9 +77,10 @@ class Bases {
                 throw error
             }
             let newRecord = new self.model(info)
-            let record = await newRecord.save((error,createdRecord))
+            let record = await newRecord.save()
             if(!record){
                 let msg = "Record not created"
+                let error = new Error(msg)
                 error.errorType='INTERNAL_VALIDATION'
                 error.msg=msg
                 throw error

@@ -1,7 +1,7 @@
 module.exports = {};
-emitter.on('appStarted', () => {
-    co(function *(){
-        let admin = yield UserServices.getOneByQuery({'login.username':'admin'})
+emitter.on('appStarted', async () => {
+    try{
+        let admin = await UserServices.getOneByQuery({'login.username':'admin'})
         if (!admin){
             admin = {
                 name:{
@@ -11,18 +11,22 @@ emitter.on('appStarted', () => {
                 company:"",
                 login:{
                     username:"admin",
-                    secret: yield UserServices.bCryptHash('passw0rd')
+                    secret: await UserServices.bCryptHash('passw0rd')
                 },
                 isAdmin:true
             };
-            logger.debug(admin)
-            yield UserServices.createUser(admin)
+            await UserServices.createUser(admin)
         }
-        return ;
-    }).then(()=>{
         logger.debug('Admin User established');
-    }).catch((error)=>{
-        logger.error(error)
-    })
+        return ;
+
+    }catch(error){
+        logger.error(error.stack)
+    }
+    // co(function *(){
+    // }).then(()=>{
+    // }).catch((error)=>{
+    //     logger.error(error)
+    // })
 
 })
