@@ -3,115 +3,169 @@ class Bases {
        this.model = model; 
     }
     getById(id, options){}
-    getOneByQuery(filter, options){
+    async getOneByQuery(filter, options){
         let self = this;
-        return new Promise((resolve,reject)=>{
-            if(!filter){
+        try{
+            if (!filter) {
                 let error = new Error('filter is required')
-                error.errorType ='INTERNAL_VALIDATION';
+                error.errorType = 'INTERNAL_VALIDATION';
                 error.message = 'filter is required'
-                reject(error)
+                throw error
             }
-            let transaction = self.model.findOne(filter);
-            // resolve({})
-            transaction.exec((error,result)=>{
-                if(error){
-                    let msg = error.toString();
-                    let error = new Error(msg)
-                    error.errorType = 'TRANSCATION'
-                    reject(error)
-                }
-                if((!result && options && options.handleNotFound)|| (!result && options)){
-                    logger.debug("Result not Found")
-                    reject()
-                }
-                // logger.debug(result)
-                resolve(result)
-            })
-        })
+            let result = await self.model.findOne(filter).lean();
+            return result
+        }catch(error){
+            throw errror
+        }
+        // transaction.exec((error,result)=>{
+        //     if(error){
+        //         let msg = error.toString();
+        //         let error = new Error(msg)
+        //         error.errorType = 'TRANSCATION'
+        //         throw error
+        //     }
+        //     if((!result && options && options.handleNotFound)|| (!result && options)){
+        //         logger.debug("Result not Found")
+        //         throw new Error("Result Not Found")
+        //     }
+        //     // logger.debug(result)
+        //     return result
+        // })
     }
-    getByQuery(filter, options, projection){
+    async getByQuery(filter, options, projection){
         let self = this;
-        return new Promise((resolve, reject) => {
+        try{
             if (!filter) {
                 filter = {};
                 logger.warn(`No filter provided for find ${self.model.modelName}`)
-                // let error = new Error('filter is required')
-                // error.errorType = 'INTERNAL_VALIDATION';
-                // error.message = 'filter is required'
-                // reject(error)
+                let error = new Error('filter is required')
+                error.errorType = 'INTERNAL_VALIDATION';
+                error.message = 'filter is required'
+                throw error
             }
-
-            let transaction = self.model.find(filter).lean();
-            // resolve({})
-            transaction.exec((error, result) => {
-                if (error) {
-                    let msg = error.toString();
-                    let error = new Error(msg)
-                    error.errorType = 'TRANSCATION'
-                    reject(error)
-                }
-                if ((!result && options && options.handleNotFound) || (!result && options)) {
-                    logger.debug("Result not Found")
-                    reject()
-                }
-                // logger.debug(result)
-                resolve(result)
-            })
-        })
+            let result = await self.model.find(filter).lean();
+            return result
+        }catch(error){
+            throw error
+        }
+        // resolve({})
+        // transaction.exec((error, result) => {
+        //     if (error) {
+        //         let msg = error.toString();
+        //         let error = new Error(msg)
+        //         error.errorType = 'TRANSCATION'
+        //         throw error
+        //     }
+        //     if ((!result && options && options.handleNotFound) || (!result && options)) {
+        //         logger.debug("Result not Found")
+        //         throw new Error("Result not Found")
+        //     }
+        //     // logger.debug(result)
+        //     return result
+        // })
+        
     }
     countByQuery(filter, options){}
-    create(info, options){
+    async create(info, options){
         let self = this;
-        return new Promise((resolve,reject)=>{
-            // console.log(self.model.modelName)
+        try {
             if(!info){
                 let msg = `Info required to create ${self.model.modelName}`
                 let error = new Error(msg)
                 error.errorTYpe = 'INTERNAL_VALIDATION'
                 error.msg = msg
-                reject(error)
+                throw error
             }
             let newRecord = new self.model(info)
-            newRecord.save((error,createdRecord)=>{
-                if(error){
-                    logger.error(err)
-                    reject(error)
-                }
-                resolve(createdRecord.toJSON())
-            })
-        })
+            let record = await newRecord.save((error,createdRecord))
+            if(!record){
+                let msg = "Record not created"
+                error.errorType='INTERNAL_VALIDATION'
+                error.msg=msg
+                throw error
+            }
+            return record
+        }catch(error){
+            throw error
+        }
+        
     }
-    updateById(id, info, options){
+    async updateById(id, info, options){
         let self = this;
-        return new Promise((resolve,reject)=>{
+        try {
             if(!id || !info){
                 let msg = 'id and info are required';
                 let error = new Error(msg);
-
+    
                 error.errorType = "INTERNAL_VALIDATION"
                 error.msg = msg;
-                return reject(error);
+                throw error
             }
-            self.model.findOneAndUpdate({_id:id},info,{new:true,runValidators:true},(err,updateResult)=>{
-                if(err || !updateResult){
-                    if (!updateResult){
-                        let msg = 'not updated \n Document not Found'
-                        let error = new Error(msg)
-                        error.errorType = 'INTERNAL_VALIDATION'
-                        error.message = msg
-                        reject(error)
-                    }
-                    reject(err)
-                    reject(err)
-                }
-                resolve(updateResult.toJSON())
-            })
-        })
+            let result = await self.model.findOneAndUpdate({ _id: id }, info, { new: true, runValidators: true })
+            if(!result){
+                let error = new Error("Document not updated")
+                error.errorType = 'INTERNAL_VALIDATION'
+                error.message = "Document not updated"
+                throw error
+            }
+            return result
+        }catch(error){
+            throw error
+        }
     }
-    updateByQuery(filter, info, options){}
-    deleteById(id, options){}
-    deleteByQuery(filter, options){}
+    async updateByQuery(filter, info, options){
+        let self = this
+        try {
+            if (!filter || !info){
+                let msg = ""
+                let error = new Error()
+                error.errorType = 'INTERNAL_VALIDATION'
+                error.message=msg
+                throw error
+            }
+
+        }catch(error){
+            throw error
+        }
+    }
+    async deleteById(id, options){
+        let self = this
+        try {
+            if (!id){
+                let msg = "No Document Id provided"
+                let error = new Error()
+                error.errorType = 'INTERNAL_VALIDATION'
+                error.message=msg
+                throw error
+            }
+            let record = await self.model.findOneAndDelete({"_id":id})
+            if (!record){
+                let msg = `${self.model.modelName} Record not Found`
+                let error  = new Error(msg)
+                error.errorType = 'INTERNAL_VALIDATION'
+                error.msg = msg
+                throw error
+            }
+            return
+        }catch(error){
+            throw error
+        }
+    }   
+    async deleteByQuery(filter, options){
+        let self = this
+        try {
+            if (!filter){
+                let msg = ""
+                let error = new Error()
+                error.errorType = 'INTERNAL_VALIDATION'
+                error.message=msg
+                throw error
+            }
+
+        }catch(error){
+            throw error
+        }
+    }
 
 }
 

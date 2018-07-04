@@ -1,23 +1,20 @@
 'use strict';
 
-module.exports = function (req, res, next) {
+module.exports = async function (req, res, next) {
     // logger.debug(req.method, ' ', req.path);
-    co(function* () {
+    try{
         if (req.headers.authorization && req.headers.authorization.split(' ')[0] === 'Bearer') {
             var token = req.headers.authorization.split(' ')[1];
-            let user = yield JWTServices.getUser(token);
-
-            return user;
-        } else {
-            return undefined;
-        }
-    }).then(function (user) {
-        if (user) {
-            req.user = user;
-        }
-        return next();
-    }).catch(function (error) {
+            let user = await JWTServices.getUser(token);
+            if (user) {
+                req.user = user;
+            }
+            return next();
+       }else{
+           throw new Error("Invalid Token")
+       }
+    }catch(error){
         logger.error(error);
         res.status(403).json({ error: 'Forbidden' });
-    });
+    }
 };

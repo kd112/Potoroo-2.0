@@ -8,10 +8,10 @@ function routeLogger(req, res, error) {
     else return res.send(res.result)
 }
 // Routes for the application
-router.get('/', injectors.setUserFromCookie, controllers.ViewController.renderLogin, routeLogger)
-router.get('/login', injectors.setUserFromCookie, controllers.ViewController.renderLogin, routeLogger)
+// router.get('/', injectors.setUserFromCookie, controllers.ViewController.renderLogin, routeLogger)
+// router.get('/login', injectors.setUserFromCookie, controllers.ViewController.renderLogin, routeLogger)
 router.post('/authenticate', controllers.ApplicationController.authenticate, routeLogger)
-router.get('/app',controllers.ApplicationController.renderApp,routeLogger)
+// router.get('/app',controllers.ApplicationController.renderApp,routeLogger)
 
 
 module.exports = router;

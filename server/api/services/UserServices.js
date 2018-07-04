@@ -128,6 +128,13 @@ class UserServices extends base{
         //     })
         // })
     }
+    async deleteById(id){
+        try{
+            return await super.deleteById(id)
+        }catch(error){
+            throw error
+        }
+    }
 }
 
 module.exports=UserServices;
