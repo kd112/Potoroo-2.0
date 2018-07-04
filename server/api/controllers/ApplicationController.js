@@ -22,10 +22,11 @@ class ApplicationController{
                 let error = new Error(msg)
                 error.msg = "Auth failed"
                 throw error
-                }
+            }
             let user = await UserServices.authenticate(username, password)
+            let token = await JWTServices.generateToken(user)
             res.status(200);
-            res.result = user
+            res.result = token
             next()
         }catch(error){
             res.status(500)

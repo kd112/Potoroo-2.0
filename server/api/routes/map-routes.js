@@ -9,7 +9,7 @@ function routeLogger(req, res, error) {
 // router.post('/maps', injectors.setUserFromCookie, controllers.MapController.createNewMap, routeLogger)
 // router.put('/maps/:id', injectors.setUserFromCookie, controllers.MapController.updateMap, routeLogger)
 // router.delete('/maps/:id', injectors.setUserFromCookie, controllers.MapController.deleteMap, routeLogger)
-
+// router.all('/*', injectors.setUserFromData)
 router.get('/', injectors.setUserFromCookie, controllers.MapController.getMaps, routeLogger)
 router.get('/:id', injectors.setUserFromCookie, controllers.MapController.getMapsById, routeLogger)
 router.post('/', injectors.setUserFromCookie, controllers.MapController.createNewMap, routeLogger)

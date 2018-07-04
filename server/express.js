@@ -35,11 +35,15 @@ global.MapServices = new (require('./api/services/MapServices'))(app.models.MapM
 global.UserServices = new (require('./api/services/UserServices'))(app.models.UserModel)
 global.JWTServices = new(require('./api/services/JWTService'))(sessiontoken.session);
 
+logger.debug('Setting up Policies')
+global.policies = {
+    isAuthenticated:require('./api/policies/isAuthenticated')
+}
 // Setting up injectors
 logger.debug('Setting up Injectors Services');
 global.injectors={
     setUserFromCookie: require('./api/injectors/setUserFromCookie'),
-    setUserFromCookie: require('./api/injectors/setUserData')
+    setUserFromData: require('./api/injectors/setUserData')
 }
 
 //  The controller object, any route set up in the router will call one of these controllers
@@ -51,6 +55,7 @@ global.controllers = {
     ApplicationController : new(require('./api/controllers/ApplicationController'))(),
     ViewController: new(require('./api/controllers/ViewController'))()
 };
+
 // Enable Cors
 logger.debug('Enabling Cors')
 require('./config/cors').init(app)

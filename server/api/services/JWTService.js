@@ -14,8 +14,9 @@ class JWTService {
         return jwt.sign(payload, this.key, { expiresIn: 60 * 60 * 24 });
     }
     getUser(token) {
+        let self = this
         return new Promise(function (resolve, reject) {
-            jwt.verify(token, this.key, {}, function (err, user) {
+            jwt.verify(token, self.key, {}, function (err, user) {
                 if (err) {
                     logger.error(err);
                     reject(err);

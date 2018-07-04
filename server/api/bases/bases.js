@@ -42,7 +42,7 @@ class Bases {
                 // reject(error)
             }
 
-            let transaction = self.model.find(filter);
+            let transaction = self.model.find(filter).lean();
             // resolve({})
             transaction.exec((error, result) => {
                 if (error) {
