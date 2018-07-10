@@ -26,7 +26,9 @@ class ApplicationController{
             let user = await UserServices.authenticate(username, password)
             let token = await JWTServices.generateToken(user)
             res.status(200);
-            res.result = token
+            res.result = {token:token,
+                          user:user
+                        }
             next()
         }catch(error){
             res.status(500)
