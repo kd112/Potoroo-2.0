@@ -11,7 +11,7 @@ function routeLogger(req, res, error) {
 // router.get('/', injectors.setUserFromCookie, controllers.ViewController.renderLogin, routeLogger)
 // router.get('/login', injectors.setUserFromCookie, controllers.ViewController.renderLogin, routeLogger)
 router.post('/authenticate', controllers.ApplicationController.authenticate, routeLogger)
-// router.get('/app',controllers.ApplicationController.renderApp,routeLogger)
+router.get('/session',controllers.ApplicationController.getSession,routeLogger)
 
 
 module.exports = router;

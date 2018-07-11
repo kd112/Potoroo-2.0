@@ -41,6 +41,25 @@ class ApplicationController{
     logout(req,res,next){
         next()
     }
+
+    async getSession(req,res,next){
+        try{
+            let token = req.headers.cookies;
+            let user = await JWTServices.getUser(token)
+            res.status=200
+            res.result = {
+                token:token,
+                user:user
+            }
+            next()
+        }
+        catch(error){
+            res.status(500)
+            res.error = error
+            res.result = { error: `${error.msg}` }
+            next()
+        }
+    }
 }
 
 module.exports = ApplicationController;
