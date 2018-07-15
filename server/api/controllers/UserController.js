@@ -27,6 +27,24 @@ class UserController{
         next();
 
     }
+    async invite(req,res,next){
+        try{
+            let invites = req.body.invitations;
+            for ( let invite of invites){
+                console.log(invite)
+                await InvitationServices.create(invite,{})
+            }
+            res.status(200)
+            res.result = {message:"Invitations Sent",success:true}
+            next()
+        }catch(error){
+            res.status(500)
+            res.error = error
+            if(!error.msg)error.msg = error
+            res.result = {error: `${error.msg}`}
+            next()
+        }
+    }
     createNewUser(req,res,next){
         res.status(201)
         res.result = {UserController : req.method}

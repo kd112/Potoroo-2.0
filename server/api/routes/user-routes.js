@@ -17,6 +17,7 @@ router.get('/:id', controllers.UserController.getUsersById,routeLogger)
 router.post('/', controllers.UserController.createNewUser,routeLogger)
 router.put('/:id', controllers.UserController.updateUser,routeLogger)
 router.delete('/:id', controllers.UserController.deleteUser,routeLogger)
+router.post('/invite',controllers.UserController.invite,routeLogger)
 
 
 module.exports=router;
