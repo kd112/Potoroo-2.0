@@ -138,6 +138,10 @@ class UserServices extends base{
             throw error
         }
     }
+
+    getById(id){
+        return super.getById(id)
+    }
 }
 
 module.exports=UserServices;

@@ -2,7 +2,21 @@ class Bases {
     constructor(model){
        this.model = model; 
     }
-    getById(id, options){}
+    getById(id, options){
+        let self = this;
+        if (!id){
+            let error = new Error("Id is required")
+            error.errorType = "INTERNAL_VALIDATION"
+            error.message = "Id is required"
+            throw error
+        }
+        return self.model.findById(id).lean().exec();
+        // try{
+        //     if ()
+        // }catch(error){
+
+        // }
+    }
     async getOneByQuery(filter, options){
         let self = this;
         try{

@@ -60,6 +60,23 @@ class ApplicationController{
             next()
         }
     }
+    async getInvitation(req,res,next){
+        try{
+            let id = req.params.id
+            // console.log(id)
+            // let user
+            let user = await UserServices.getById(id)
+            // console.log(user)
+            res.status(200)
+            res.result = {user:user}
+            next();
+        }catch(error){
+            res.status(500)
+            res.error = error
+            res.result = {error:error.msg}
+            next();
+        }
+    }
 }
 
 module.exports = ApplicationController;
