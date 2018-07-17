@@ -31,8 +31,8 @@ class UserController{
         try{
             let invites = req.body.invitations;
             for ( let invite of invites){
-                console.log(invite)
-                await InvitationServices.create(invite,{})
+                // console.log(invite)
+                await UserServices.createUser(invite,{})
             }
             res.status(200)
             res.result = {message:"Invitations Sent",success:true}

@@ -16,7 +16,7 @@ let UserSchema = new mongoose.Schema({
     mobile: String,
     email: String,
     company: String,
-
+    isAuthenticated:{type:Boolean,default:false},
     isAdmin: { type: Boolean, default: false },
     archived: { type: Boolean, default: false }
     
