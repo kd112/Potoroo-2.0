@@ -60,13 +60,54 @@ class ApplicationController{
             next()
         }
     }
+    async createNewUser(req,res,next){
+        try{
+            let user = req.body.user
+            user.login.secret = await UserServices.bCryptHash(user.login.password)
+            delete user.login['password']
+            let updateuser = await UserServices.updateUser(user._id, user);
+            // let updateuser = user
+            console.log(updateuser)
+            if (!updateuser){
+                let message = "User Not Updated"
+                let error = new Error(`${message} ${user._id}`)
+                error.type = "INTERNAL_VALIDATION"
+                error.msg = message
+                throw error
+            }
+            let token = await JWTServices.generateToken(updateuser.toJSON())
+            res.status(200)
+            res.result = {
+                token:token,
+                user:updateuser
+            }
+            next()
+
+        }catch(error){
+            logger.error(error.stack)
+            res.status(500);
+            res.error = error;
+            res.result = { error: `${error.msg}` };
+            next();
+        }
+    }
     async getInvitation(req,res,next){
         try{
             let id = req.params.id
             // console.log(id)
             // let user
-            let user = await UserServices.getById(id)
-            // console.log(user)
+            let filter = {
+                _id:id,
+                isAuthenticated:false
+            }
+            let user = await UserServices.getOneByQuery(filter)
+            if(!user){
+                let msg = "User Not Found"
+                let error = new Error(`${msg} id: ${id}`)
+                error.msg = msg
+                error.type = "INTERNAL_VALIDATION"
+                throw error
+            }
             res.status(200)
             res.result = {user:user}
             next();

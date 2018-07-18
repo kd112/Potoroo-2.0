@@ -13,5 +13,6 @@ function routeLogger(req, res, error) {
 router.post('/authenticate', controllers.ApplicationController.authenticate, routeLogger)
 router.get('/session',controllers.ApplicationController.getSession,routeLogger)
 router.get('/invitation/:id',controllers.ApplicationController.getInvitation,routeLogger)
+router.post('/invitation', controllers.ApplicationController.createNewUser,routeLogger)
 
 module.exports = router;
