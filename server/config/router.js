@@ -7,7 +7,7 @@ const applicationroutes = require('../api/routes/application-routes');
 module.exports = function(app){
     app.all('/api/*', injectors.setUserFromData, policies.isAuthenticated)
     // Crud Routes for users
-    app.use('/api/users',userroutes,maproutes);
+    app.use('/api/users',userroutes);
     //CRUD Routes for maps
     app.use('/api/maps',maproutes);
     // Routes for the application
