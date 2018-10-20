@@ -69,8 +69,8 @@ global.controllers = {
 };
 
 // Enable Cors
-logger.debug('Enabling Cors')
-require('./config/cors').init(app)
+// logger.debug('Enabling Cors')
+// require('./config/cors').init(app)
 
 // The route file for this application
 logger.debug('Wiring up the routes');
